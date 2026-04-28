@@ -7,6 +7,8 @@ The functionalities of this system are:
 - Automates tasks, such as noise removal from signals, image segmentation, and the initial analysis of vast datasets.
 
 <p align="center">
+  <img src="static/assests/Screenshot 2026-04-28 at 08.22.21.png" width="600">
+  <br>
   <img src="static/assests/Screenshot 2026-04-28 at 08.22.32.png" width="600">
   <br>
   <img src="static/assests/Screenshot 2026-04-28 at 08.24.10.png" width="600">
