@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='img/favicon.png') }}">
+    <title>Integrated Patient Health System</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='plugins/fontawesome/css/fontawesome.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='plugins/fontawesome/css/all.min.css') }}">
+    
+    <!-- Select2 CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/select2.min.css') }}">
+
+	<!-- Datepicker CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap-datetimepicker.min.css') }}">
+    
+    <!-- Datatables CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='plugins/datatables/datatables.min.css') }}">
+    
+    <!-- Feathericon CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/feather.css') }}">
+    
+    <!-- Main CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+     
+</head>
+
+<body>
+    <div class="main-wrapper">
+        <div class="header">
+            <div class="header-left">
+                <a href="{{ url_for('index') }}" class="logo">
+                    <img src="{{ url_for('static', filename='upec.png') }}" width="130" height="60" alt=""> <span>IPHS</span>
+                </a>
+            </div>
+            <a id="toggle_btn" href="javascript:void(0);">
+                <img src="{{ url_for('static', filename='img/icons/bar-icon.svg') }}"  alt="">
+            </a>
+            <a id="mobile_btn" class="mobile_btn float-start" href="#sidebar">
+                <img src="{{ url_for('static', filename='img/icons/bar-icon.svg') }}"  alt="">
+            </a>
+            <div class="top-nav-search mob-view">
+                <form>
+                    <input type="text" class="form-control" placeholder="Search here">
+                    <a class="btn">
+                        <img src="{{ url_for('static', filename='img/icons/search-normal.svg') }}" alt="">
+                    </a>
+                </form>
+            </div>
+            <ul class="nav user-menu float-end">
+                <li class="nav-item dropdown has-arrow user-profile-list">
+                    <a href="#" class="dropdown-toggle nav-link user-link" data-bs-toggle="dropdown">
+                        <div class="user-names">
+                            <h5>OYEYEMI DARE</h5>
+                            <span>Admin</span>
+                        </div>
+                        <span class="user-img">
+                            <img  src="{{ url_for('static', filename='img/user.jpg') }}"  alt="Admin">
+                        </span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{{ url_for('profile') }}">My Profile</a>
+                        <a class="dropdown-item" href="{{ url_for('edit_profile') }}">Edit Profile</a>
+                        <a class="dropdown-item" href="{{ url_for('settings') }}">Settings</a>
+                        <a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a>
+                    </div>
+                </li>
+                <li class="nav-item ">
+                    <a href="{{ url_for('settings') }}" class="hasnotifications nav-link" style="color: black;">
+                        <img src="{{ url_for('static', filename='img/icons/setting-icon-01.svg') }}" alt=""> Help
+                    </a>
+                </li>
+            </ul>
+            <div class="dropdown mobile-user-menu float-end">
+                <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end">
+                    <a class="dropdown-item" href="{{ url_for('profile') }}">My Profile</a>
+                    <a class="dropdown-item" href="{{ url_for('edit_profile') }}">Edit Profile</a>
+                    <a class="dropdown-item" href="{{ url_for('settings') }}">Settings</a>
+                    <a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-inner slimscroll">
+                <div id="sidebar-menu" class="sidebar-menu">
+                    <ul>
+                        <li class="menu-title">Main</li>
+                        <li class="submenu">
+                            <a href="javascript:void(0);">
+                                <span class="menu-side">
+                                    <img src="{{ url_for('static', filename='img/icons/menu-icon-01.svg') }}" alt="">
+                                </span> 
+                                <span> Menu </span> 
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <ul style="display: block;">
+                                <li class="submenu">
+                                    <a href="javascript:void(0);">
+                                        <span> FIle</span> <span class="menu-arrow"></span>
+                                    </a>
+                                    <ul style="display: none;">
+                                        <li><a href="{{ url_for('load_data') }}">Load Data from file</a></li>
+                                        <li><a href="{{ url_for('load_data', source='db') }}">Load From Database</a></li>
+                                    </ul>
+                                </li>
+                                <li class="submenu">
+                                    <a href="javascript:void(0);">
+                                        <span> View</span> <span class="menu-arrow"></span>
+                                    </a>
+                                    <ul style="display: none;">
+                                        <li><a href="{{ url_for('doctor_dashboard') }}">Data Processing Panel</a></li>
+                                        <li><a href="{{ url_for('doctor_dashboard') }}">Image Processing Panel</a></li>
+                                        <li><a href="{{ url_for('doctor_dashboard') }}">Analysis Panel</a></li>
+                                    </ul>
+                                </li>                              
+                                <li><a href="{{ url_for('settings') }}">Help</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="menu-title">Functionalities</li>
+                        <li class="submenu">
+                            <a href="javascript:void(0);">
+                                <i class="fa fa-share-alt"></i> <span>Functionalities</span> <span class="menu-arrow"></span>
+                            </a>
+                            <ul style="display: block;">
+                                <li class="submenu active">
+                                    <a href="javascript:void(0);"><span>Patient Data Management</span> <span class="menu-arrow"></span></a>
+                                    <ul style="display: none;">
+                                        <li><a href="{{ url_for('patient_mgm') }}"><span>Load Datasets</span></a></li>
+                                        <li><a href="{{ url_for('patient_mgm') }}"><span>Manage Database Records</span></a></li>                                        
+                                    </ul>
+                                </li>
+                                <li class="submenu">
+                                    <a href="javascript:void(0);"><span>Health Data Analysis</span> <span class="menu-arrow"></span></a>
+                                    <ul style="display: none;">
+                                        <li><a href="javascript:void(0);"><span>Filter Patient Data</span></a></li>
+                                        <li><a href="javascript:void(0);"><span>Clean Patient Data</span></a></li> 
+                                        <li><a href="javascript:void(0);"><span>Analyze Patient Health Metrics</span></a></li>                                                                               
+                                    </ul>
+                                </li>
+                                <li class="submenu">
+                                    <a href="javascript:void(0);"><span>Signal Processing</span> <span class="menu-arrow"></span></a>
+                                    <ul style="display: none;">
+                                        <li><a href="javascript:void(0);"><span>Frequency Domain Analysis</span></a></li> 
+                                        <li><a href="javascript:void(0);"><span>Time Domain Analysis</span></a></li>
+                                        <li><a href="javascript:void(0);"><span>Spectrum Analysis</span></a></li>                                      
+                                    </ul>
+                                </li>
+                                <li class="submenu">
+                                    <a href="javascript:void(0);"><span>Medical Image Processing</span> <span class="menu-arrow"></span></a>
+                                    <ul style="display: none;">
+                                        <li><a href="javascript:void(0);"><span>Tasks on X-Rays</span></a></li>
+                                        <li><a href="javascript:void(0);"><span>Analyze MRIs</span></a></li>                                        
+                                    </ul>
+                                </li>
+                                <li class="submenu">
+                                    <a href="javascript:void(0);"><span>Data Visualization</span> <span class="menu-arrow"></span></a>
+                                    <ul style="display: none;">
+                                        <li><a href="javascript:void(0);"><span>Display Plots</span></a></li>
+                                        <li><a href="javascript:void(0);"><span>Display Heatmaps</span></a></li>      
+                                        <li><a href="javascript:void(0);"><span>Display Processed images</span></a></li>                                   
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>   
+                    <div class="logout-btn">
+                        <a href="{{ url_for('logout') }}">
+                            <span class="menu-side">
+                                <img src="{{ url_for('static', filename='img/icons/logout.svg') }}" alt="">
+                            </span> 
+                            <span>Logout</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-wrapper">
+            <div class="content">
+            
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="{{ url_for('index') }}">Dashboard </a>
+                                </li>
+                                <li class="breadcrumb-item"><i class="feather-chevron-right"></i></li>
+                                <li class="breadcrumb-item">
+                                    <a href="{{ url_for('patients_list') }}">Patients </a>
+                                </li>
+                                <li class="breadcrumb-item"><i class="feather-chevron-right"></i></li>
+                                <li class="breadcrumb-item active">New Patient Record</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Page Header -->
+                
+                <div class="row">
+					<div class="col-sm-12">
+					
+						<div class="card">
+							<div class="card-body">
+								<form action="{{ url_for('add_patients') }}" method="POST">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-heading">
+                                                <h4>Patient Details</h4>
+                                            </div>
+                                        </div>
+
+                                        <!-- FIRST NAME -->
+                                        <div class="col-12 col-md-6 col-xl-4">  
+                                            <div class="input-block local-forms">
+                                                <label>First Name <span class="login-danger">*</span></label>
+                                                <input class="form-control" type="text" name="First_Name" required>
+                                            </div>
+                                        </div>
+
+                                        <!-- LAST NAME -->
+                                        <div class="col-12 col-md-6 col-xl-4">
+                                            <div class="input-block local-forms">
+                                                <label>Last Name <span class="login-danger">*</span></label>
+                                                <input class="form-control" type="text" name="Last_Name" required>
+                                            </div>
+                                        </div>
+
+                                        <!-- PHONE -->
+                                        <div class="col-12 col-md-6 col-xl-4">
+                                            <div class="input-block local-forms">
+                                                <label>Mobile <span class="login-danger">*</span></label>
+                                                <input class="form-control" type="text" name="Phone" required>
+                                            </div>
+                                        </div>
+
+                                        <!-- EMAIL -->
+                                        <div class="col-12 col-md-6 col-xl-6">
+                                            <div class="input-block local-forms">
+                                                <label>Email <span class="login-danger">*</span></label>
+                                                <input class="form-control " type="email" name="Email" required>
+                                            </div>
+                                        </div>
+
+                                        <!-- DATE OF BIRTH -->
+                                        <div class="col-12 col-md-6 col-xl-6">
+                                            <div class="input-block local-forms">
+                                                <label>Date Of Birth <span class="login-danger">*</span></label>
+                                                <input class="form-control" type="date" name="DOB" required>
+                                            </div>
+                                        </div>
+
+                                        <!-- GENDER -->
+                                        <div class="col-12 col-md-6 col-xl-6">
+                                            <div class="input-block select-gender">
+                                                <label class="gen-label">Gender <span class="login-danger">*</span></label>
+                                                <div class="form-check-inline">
+                                                    <label class="form-check-label">
+                                                        <input type="radio" name="Gender" value="Male" class="form-check-input" required> Male
+                                                    </label>
+                                                </div>
+                                                <div class="form-check-inline">
+                                                    <label class="form-check-label">
+                                                        <input type="radio" name="Gender" value="Female" class="form-check-input" required> Female
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- DEPARTMENT -->
+                                        <div class="col-12 col-md-6 col-xl-4">
+                                            <div class="input-block local-forms">
+                                                <label>Department <span class="login-danger">*</span></label>
+                                                <select class="form-control select" name="Department" required>
+                                                    <option value="">Select Department</option>
+                                                    <option value="Orthopedics">Orthopedics</option>
+                                                    <option value="Radiology">Radiology</option>
+                                                    <option value="Dentist">Dentist</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <!-- ADDRESS -->
+                                        <div class="col-12 col-sm-12">
+                                            <div class="input-block local-forms">
+                                                <label>Address <span class="login-danger">*</span></label>
+                                                <textarea class="form-control" rows="3" name="Address" required></textarea>
+                                            </div>
+                                        </div>
+
+                                        <!-- CITY -->
+                                        <div class="col-12 col-md-6 col-xl-3">
+                                            <div class="input-block local-forms">
+                                                <label>City <span class="login-danger">*</span></label>
+                                                <input class="form-control" type="text" name="City" required>
+                                            </div>
+                                        </div>
+
+                                        <!-- COUNTRY -->
+                                        <div class="col-12 col-md-6 col-xl-3">
+                                            <div class="input-block local-forms">
+                                                <label>Country <span class="login-danger">*</span></label>
+                                                <input class="form-control" type="text" name="Country" required>
+                                            </div>
+                                        </div>
+
+                                        <!-- POSTAL CODE -->
+                                        <div class="col-12 col-md-6 col-xl-3">
+                                            <div class="input-block local-forms">
+                                                <label>Postal Code <span class="login-danger">*</span></label>
+                                                <input class="form-control" type="text" name="Postal_Code" required>
+                                            </div>
+                                        </div>
+
+                                        <!-- BUTTONS -->
+                                        <div class="col-12">
+                                            <div class="doctor-submit text-end">
+                                                <button type="submit" class="btn btn-primary submit-form me-2">Submit</button>
+                                                <a href="{{ url_for('patients_list') }}" class="btn btn-secondary cancel-form">Cancel</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+							</div>
+						</div>							
+					</div>					
+				</div>
+            </div>
+        </div>
+
+        <div id="delete_patient" class="modal fade delete-modal" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <img src="{{ url_for('static', filename='img/sent.png') }}" alt="" width="50" height="46">
+                        <h3>Are you sure want to delete this ?</h3>
+                        <div class="m-t-20">
+                            <a href="#" class="btn btn-white" data-bs-dismiss="modal">Close</a>
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="sidebar-overlay" data-reff=""></div>
+
+    <!-- jQuery -->
+    <script src="{{ url_for('static', filename='js/jquery-3.7.1.min.js') }}"></script>
+    <!-- Bootstrap Core JS -->
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <!-- Feather Js -->
+    <script src="{{ url_for('static', filename='js/feather.min.js') }}"></script>
+    <!-- Slimscroll -->
+    <script src="{{ url_for('static', filename='js/jquery.slimscroll.js') }}"></script>
+    
+	<script src="{{ url_for('static', filename='js/select2.min.js') }}"></script>
+	<!-- Datepicker Core JS -->
+    <script src="{{ url_for('static', filename='plugins/moment/moment.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap-datetimepicker.min.js') }}"></script>
+	
+    <!-- Datatables JS -->
+    <script src="{{ url_for('static', filename='plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='plugins/datatables/datatables.min.js') }}"></script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+</body>
+
+</html>

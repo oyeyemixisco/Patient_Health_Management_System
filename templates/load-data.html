@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+  <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='img/favicon.png') }}">
+  <title>Integrated Patient Health System</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+
+  <!-- Fontawesome CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='plugins/fontawesome/css/fontawesome.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='plugins/fontawesome/css/all.min.css') }}">
+
+  <!-- Select2 CSS -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/select2.min.css') }}">
+
+  <!-- Datatables CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='plugins/datatables/datatables.min.css') }}">
+
+  <!-- Feathericon CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/feather.css') }}">
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+  <div class="main-wrapper">
+
+    <!-- Header -->
+    <div class="header">
+      <div class="header-left">
+        <a href="{{ url_for('index') }}" class="logo">
+          <img src="{{ url_for('static', filename='upec.png') }}" width="130" height="60" alt="">
+          <span>IPHS</span>
+        </a>
+      </div>
+
+      <a id="toggle_btn" href="javascript:void(0);">
+        <img src="{{ url_for('static', filename='img/icons/bar-icon.svg') }}" alt="">
+      </a>
+
+      <a id="mobile_btn" class="mobile_btn float-start" href="#sidebar">
+        <img src="{{ url_for('static', filename='img/icons/bar-icon.svg') }}" alt="">
+      </a>
+
+      <div class="top-nav-search mob-view">
+        <form>
+          <input type="text" class="form-control" placeholder="Search here">
+          <a class="btn"><img src="{{ url_for('static', filename='img/icons/search-normal.svg') }}" alt=""></a>
+        </form>
+      </div>
+
+      <ul class="nav user-menu float-end">
+        <li class="nav-item dropdown has-arrow user-profile-list">
+          <a href="#" class="dropdown-toggle nav-link user-link" data-bs-toggle="dropdown">
+            <div class="user-names">
+              <h5>OYEYEMI DARE</h5>
+              <span>Admin</span>
+            </div>
+            <span class="user-img">
+              <img src="{{ url_for('static', filename='img/user.jpg') }}" alt="Admin">
+            </span>
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="{{ url_for('profile') }}">My Profile</a>
+            <a class="dropdown-item" href="{{ url_for('edit_profile') }}">Edit Profile</a>
+            <a class="dropdown-item" href="{{ url_for('settings') }}">Settings</a>
+            <a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a href="{{ url_for('settings') }}" class="hasnotifications nav-link" style="color: black;">
+            <img src="{{ url_for('static', filename='img/icons/setting-icon-01.svg') }}" alt=""> Help
+          </a>
+        </li>
+      </ul>
+
+      <div class="dropdown mobile-user-menu float-end">
+        <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fa-solid fa-ellipsis-vertical"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-end">
+          <a class="dropdown-item" href="{{ url_for('profile') }}">My Profile</a>
+          <a class="dropdown-item" href="{{ url_for('edit_profile') }}">Edit Profile</a>
+          <a class="dropdown-item" href="{{ url_for('settings') }}">Settings</a>
+          <a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a>
+        </div>
+      </div>
+    </div>
+    <!-- /Header -->
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-inner slimscroll">
+        <div id="sidebar-menu" class="sidebar-menu">
+          <ul>
+            <li class="menu-title">Main</li>
+            <li class="submenu active">
+                <a href="javascript:void(0);">
+                    <span class="menu-side">
+                        <img src="{{ url_for('static', filename='img/icons/menu-icon-01.svg') }}" alt="">
+                    </span> 
+                    <span> Menu </span> 
+                    <span class="menu-arrow"></span>
+                </a>
+                <ul style="display: block;">
+                    <li class="submenu">
+                        <a href="javascript:void(0);"> 
+                            <span> File</span> <span class="menu-arrow"></span>
+                        </a>
+                        <ul style="display: none;">
+                            <li><a href="{{ url_for('load_data', source='file') }}"></a></li>
+                            <li><a href="{{ url_for('load_data', source='db') }}">Load From Database</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                      <a href="javascript:void(0);"> <span> View</span> <span class="menu-arrow"></span></a>
+                      <ul style="display: none;">
+                          <li><a href="{{ url_for('patient_mgm') }}">Data Processing Panel</a></li>
+                          <li><a href="{{ url_for('image_processing') }}">Image Processing Panel</a></li>
+                          <li><a href="{{ url_for('health') }}">Data Analysis Panel</a></li>
+                          <li><a href="{{ url_for('signal') }}">Signal Processing Panel</a></li>
+                      </ul>
+                    </li>                                
+                    <li><a href="{{ url_for('settings') }}">Help</a></li>
+                </ul>
+            </li>
+
+            <li class="menu-title">Functionalities</li>
+            <li class="submenu">
+                <a href="javascript:void(0);">
+                    <i class="fa fa-share-alt"></i> <span>Functionalities</span> <span class="menu-arrow"></span>
+                </a>
+                <ul style="display: block;">
+                    <li class="submenu">
+                        <a href="javascript:void(0);"><span>Patient Data Management</span> <span class="menu-arrow"></span></a>
+                        <ul style="display: block;">
+                            <li class="active"><a href="{{ url_for('load_data', source='db') }}"><span>Load Data from Database</span></a></li>
+                            <li class=""><a href="{{ url_for('load_data', source='file') }}"><span>Load Data from File</span></a></li>
+                            <li><a href="{{ url_for('patient_mgm') }}"><span>Manage Database Records</span></a></li>                                        
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                      <a href="{{ url_for('image_processing') }}"><span>Medical Image Processing</span> <span class="menu-arrow"></span></a>
+                      <ul style="display: none;">
+                          <li><a href="{{ url_for('img_processing') }}"><span>Grayscale Conversion</span></a></li>
+                          <li><a href="{{ url_for('img_processing') }}"><span>Edge Detection</span></a></li>   
+                          <li><a href="{{ url_for('img_processing') }}"><span>Image Difference</span></a></li>                                     
+                      </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="{{ url_for('health') }}"><span>Health Data Analysis</span> <span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li><a href="{{ url_for('health') }}"><span>Filter Patient Data</span></a></li>
+                            <li><a href="{{ url_for('health') }}"><span>Clean Patient Data</span></a></li> 
+                            <li><a href="{{ url_for('health') }}"><span>Analyze Patient Health Metrics</span></a></li>                                                                               
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="javascript:void(0);"><span>Signal Processing</span> <span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li><a href="javascript:void(0);"><span>Frequency Domain Analysis</span></a></li> 
+                            <li><a href="javascript:void(0);"><span>Time Domain Analysis</span></a></li>
+                            <li><a href="javascript:void(0);"><span>Spectrum Analysis</span></a></li>                                      
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>   
+
+          <div class="logout-btn">
+            <a href="{{ url_for('logout') }}">
+              <span class="menu-side">
+                <img src="{{ url_for('static', filename='img/icons/logout.svg') }}" alt="">
+              </span>
+              <span>Logout</span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- /Sidebar -->
+
+    <!-- Page Wrapper -->
+    <div class="page-wrapper">
+      <div class="content">
+
+        <!-- Page Header -->
+        <div class="page-header">
+          <div class="row">
+            <div class="col-sm-12">
+              <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><i class="feather-chevron-right"></i></li>
+                <li class="breadcrumb-item active">Load Data</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- /Page Header -->
+        <div class="good-morning-blk">
+          <div class="row">
+              <div class="col-md-6">
+                  <div class="morning-user">
+                      <h2>Hey 👋, <span>Oyeyemi</span></h2>
+                      <p>What would you like to do on Data Loading & Management...</p>
+                  </div>
+              </div>
+              <div class="col-md-6 position-blk">
+                  <div class="morning-img">
+                      <img src="{{ url_for('static', filename='img/morning-img-03.png') }}" alt="">
+                  </div>
+              </div>
+          </div>
+        </div>
+
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div class="mt-2">
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                  {{ message }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+        <!-- /Flash messages -->
+
+        <div class="row">
+          <div class="col-sm-12">
+            
+            {% if request.args.get("source") != "db" %}
+            <!-- Upload Card -->
+            <div class="card">
+              <div class="card-body">
+                <h4 class="mb-3">Load Data from File</h4>
+                <p>Kindly Upload Dataset <i>(.csv file only)</i></p><br/>
+
+                <form action="{{ url_for('load_data') }}" method="POST" enctype="multipart/form-data">
+                  <div class="row">
+                    <div class="col-12 col-md-8">
+                      <div class="input-block local-forms">
+                        <label>Choose CSV File <span class="login-danger">*</span></label>
+                        <input class="form-control" type="file" name="csv_file" accept=".csv" required>
+                        <small class="text-muted">
+                          Header must match: ecg_id, patient_id, age, sex, height, weight,...
+                        </small><br/>
+                        <span class="login-danger">Note: Data will be validated (Only validated ECG datasets can be saved to the database)</span>
+                        
+                      </div>
+                    </div>
+
+                    <div class="col-12 col-md-4 d-flex align-items-end">
+                      <button type="submit" class="btn btn-primary w-100">
+                        Upload File
+                      </button>
+                    </div>
+                  </div>
+                </form>
+
+              </div>
+            </div>
+            {% endif %}
+
+            <!-- / Dataset selector Card -->
+            {% if request.args.get("source") == "db" %}
+            <div class="card mb-3">
+              <div class="card-body">
+                <h4>Load Data from Database</h4>
+                <p class="text-muted">Choose a dataset to preview from the database</p>
+
+                <form method="get" action="{{ url_for('load_data') }}">
+                  <input type="hidden" name="source" value="db">
+
+                  <div class="row">
+                    
+                    <div class="col-md-8">
+                      <select name="table" class="form-control select" required>
+                        <option value="">-- Select Dataset to Load from Database --</option>
+                        {% for table, meta in datasets.items() %}
+                          <option value="{{ table }}"
+                            {% if table == selected_dataset %}selected{% endif %}>
+                            {{ meta.label }}
+                          </option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    <div class="col-md-4">
+                      <button class="btn btn-primary w-100">Load Dataset</button>
+                    </div>
+                  </div>
+                </form>
+
+                {% if selected_dataset %}
+                  <div class="mt-3 alert alert-info">
+                    You are viewing datasets already stored in the system. To upload new data from file, switch to <a href="{{ url_for('load_data') }}">File Upload</a>.<br>
+                    <strong>{{ dataset_info.label }}</strong>: {{ dataset_info.description }}
+                  </div>
+                {% endif %}
+
+                
+              </div>
+            </div>
+            {% endif %}
+
+            {% if dataset_metadata %}
+            <div class="card mb-3">
+              <div class="card-header">
+                <strong>Dataset Metadata</strong>
+              </div>
+              <div class="card-body">
+                <strong>Table:</strong> {{ dataset_metadata.name }}<br>
+                <strong>Description:</strong> {{ dataset_info.description }}<br>
+                <strong>Source:</strong> {{ dataset_metadata.source }}<br>
+                <strong>Total rows:</strong> {{ dataset_metadata.row_count }}<br>
+                <strong>Number of columns:</strong> {{ dataset_metadata.columns | length }}
+              </div>
+            </div>
+            {% endif %}
+
+            <!-- Preview Card -->
+            {% if upload_mode == "ecg_valid" %}
+              <form method="POST" action="{{ url_for('save_ecg_data') }}">
+                <button class="btn btn-success" onclick="this.disabled=true; this.form.submit();">Save to Database</button>
+                <a href="{{ url_for('load_data') }}" class="btn btn-secondary">Cancel</a>
+              </form>
+            {% elif upload_mode == "preview_only" %}
+              <div class="alert alert-info">
+                <strong>Preview-only Mode:</strong> Showing the first 10 rows of the uploaded dataset.
+                Full navigation is available only after saving valid ECG data to the database. This dataset cannot be saved.
+              </div>
+              <a href="{{ url_for('load_data') }}" class="btn btn-secondary">Upload another file</a>
+            {% endif %}
+
+            {% if preview_rows and preview_rows|length > 0 %}
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h4 class="mb-0">CSV Preview (first {{ preview_rows|length }} rows)</h4>
+                  {% if inserted %}
+                    <span class="badge bg-success">Inserted: {{ inserted }}</span>
+                  {% endif %}
+                </div>
+
+                <div class="table-responsive">
+                  <table class="table table-border-0 table-striped custom-table comman-table mb-0">
+                    <thead>
+                      <tr>
+                        {% if request.args.get("source") == "db" %}
+                          <th style="color: crimson;">Action</th>
+                        {% endif %}
+
+                        {% for key in preview_rows[0].keys() %}
+                          <th class="{% if selected_dataset == 'patient_csv' and key == 'id' %}d-none{% endif %}">{{ key }}</th>
+                        {% endfor %}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for row in preview_rows %}
+                        <tr>
+                          {% if request.args.get("source") == "db" %}
+                          <td class="text-end">
+                            <div class="dropdown dropdown-action">
+                              <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown">
+                                  <i class="fa fa-ellipsis-v"></i>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-end">
+                                <a class="dropdown-item view-row"
+                                  href="#"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#rowDetailsModal"
+                                  data-table="{{ selected_dataset }}"
+                                  data-row-id="{{ row['id'] }}">
+                                  <i class="fa-solid fa-eye"></i> View
+                                </a>
+                                <a class="dropdown-item edit-row"
+                                  href="#"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#editRowModal"
+                                  data-row-id="{{ row['id'] }}"
+                                  data-table="{{ selected_dataset }}">
+                                  <i class="fa-solid fa-pen-to-square"></i> Edit
+                                </a>
+                                <a class="dropdown-item" href="#" 
+                                  data-bs-toggle="modal" 
+                                  data-bs-target="#delete_patient" 
+                                  data-row-id="{{ row['id'] }}" 
+                                  data-table="{{ selected_dataset }}">
+                                  <i class="fa fa-trash-alt m-r-5"></i> Delete
+                                </a>
+                              </div>
+                            </div>
+                          </td>
+                          {% endif %}
+                          {% for key, val in row.items() %}
+                            <td class="{% if selected_dataset == 'patient_csv' and key == 'id' %}d-none{% endif %}"
+                                title="{{ val }}"
+                                style="max-width:240px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                              {{ val }}
+                            </td>
+                          {% endfor %}
+                          
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                  <!-- Row Details Modal -->
+                  <div class="modal fade" id="rowDetailsModal" tabindex="-1">
+                    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                      <div class="modal-content">
+                        <div class="modal-header" style="background-color: #2fa6a6;">
+                          <h4 class="modal-title">Patient Details</h4>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                          <div id="row-details-content">
+                            <div class="text-muted">Loading...</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Row Edit Modal -->
+                  <div class="modal fade" id="editRowModal" tabindex="-1">
+                    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                      <div class="modal-content">
+                        <div class="modal-header" style="background-color: #2fa6a6;">
+                          <h4 class="modal-title">Edit Record</h4>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                          <form id="row-edit-form">
+                            <div id="edit-row-fields">Loading...</div>
+                            <button type="submit" class="btn btn-primary mt-2">Save Changes</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Pagination -->
+                    {% if total_pages > 1 %}
+                        <nav aria-label="Page navigation" class="mt-3">
+                            <ul class="pagination justify-content-center">
+                                <!-- Previous -->
+                                {% if page > 1 %}
+                                <li class="page-item">
+                                <a class="page-link" href="{{ url_for('load_data', source='db', table=selected_dataset, page=page-1) }}">Previous</a>
+                                </li>
+                                {% else %}
+                                <li class="page-item disabled"><span class="page-link">Previous</span></li>
+                                {% endif %}
+
+                                <!-- First page -->
+                                {% if page > 3 %}
+                                <li class="page-item">
+                                <a class="page-link" href="{{ url_for('load_data', source='db', table=selected_dataset, page=1) }}">1</a>
+                                </li>
+                                {% if page > 4 %}
+                                <li class="page-item disabled"><span class="page-link">...</span></li>
+                                {% endif %}
+                                {% endif %}
+
+                                <!-- Pages around current page -->
+                                {% for p in range(page-2, page+3) %}
+                                {% if 1 <= p <= total_pages %}
+                                    {% if p == page %}
+                                    <li class="page-item active"><span class="page-link">{{ p }}</span></li>
+                                    {% else %}
+                                    <li class="page-item"><a class="page-link" href="{{ url_for('load_data', source='db', table=selected_dataset, page=p) }}">{{ p }}</a></li>
+                                    {% endif %}
+                                {% endif %}
+                                {% endfor %}
+
+                                <!-- Last page -->
+                                {% if page < total_pages - 2 %}
+                                {% if page < total_pages - 3 %}
+                                <li class="page-item disabled"><span class="page-link">...</span></li>
+                                {% endif %}
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ url_for('load_data', source='db', table=selected_dataset, page=total_pages) }}">{{ total_pages }}</a>
+                                </li>
+                                {% endif %}
+
+                                <!-- Next -->
+                                {% if page < total_pages %}
+                                <li class="page-item">
+                                <a class="page-link" href="{{ url_for('load_data', source='db', table=selected_dataset, page=page+1) }}">Next</a>
+                                </li>
+                                {% else %}
+                                <li class="page-item disabled"><span class="page-link">Next</span></li>
+                                {% endif %}
+
+                            </ul>
+                            </nav>
+
+                    {% endif %}
+                </div>
+
+              </div>
+            </div>
+            {% endif %}
+            <!-- /Preview Card -->
+
+          </div>
+        </div>
+
+      </div>
+      <form method="POST" action="{{ url_for('delete_row') }}">
+          <input type="hidden" name="table" id="delete-table">
+          <input type="hidden" name="row_id" id="delete-row-id">
+          
+          <div id="delete_patient" class="modal fade delete-modal" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <img src="{{ url_for('static', filename='img/sent.png') }}" alt="" width="50" height="46">
+                        <h3>Are you sure want to delete this?</h3>
+                        <div class="m-t-20">
+                            <button type="button" class="btn btn-white" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+      </form>
+
+    </div>
+    <!-- /Page Wrapper -->
+
+  </div>
+
+  <div class="sidebar-overlay" data-reff=""></div>
+
+  <!-- Scripts -->
+  <script src="{{ url_for('static', filename='js/jquery-3.7.1.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/feather.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.slimscroll.js') }}"></script>
+
+  <script src="{{ url_for('static', filename='js/select2.min.js') }}"></script>
+
+  <script src="{{ url_for('static', filename='plugins/datatables/jquery.dataTables.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='plugins/datatables/datatables.min.js') }}"></script>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+<script>
+  const selectedTable = "{{ selected_dataset or '' }}";
+
+  /* =======================
+     ROW DETAILS MODAL
+  ======================= */
+  const rowDetailsModal = document.getElementById("rowDetailsModal");
+  if (rowDetailsModal) {
+    rowDetailsModal.addEventListener("show.bs.modal", function (event) {
+      const button = event.relatedTarget;
+      if (!button) return;
+
+      const rowId = button.dataset.rowId;
+      if (!rowId || !selectedTable) return;
+
+      fetch(`/api/db/row-details?table=${selectedTable}&id=${rowId}`)
+        .then(r => r.json())
+        .then(data => {
+          let html = "<table class='table table-sm'>";
+          for (const k in data) {
+            html += `<tr><th>${k}</th><td>${data[k]}</td></tr>`;
+          }
+          html += "</table>";
+          document.getElementById("row-details-content").innerHTML = html;
+        });
+    });
+  }
+
+  /* =======================
+     ROW EDIT MODAL
+  ======================= */
+  const editModal = document.getElementById("editRowModal"); // ✅ FIXED
+  if (editModal) {
+    editModal.addEventListener("show.bs.modal", function (event) {
+      const button = event.relatedTarget;
+      if (!button) return;
+
+      const rowId = button.dataset.rowId;
+      const table = button.dataset.table;
+      if (!rowId || !table) return;
+
+      fetch(`/api/db/row-details?table=${table}&id=${rowId}`)
+        .then(r => r.json())
+        .then(data => {
+          let html = "";
+          for (const k in data) {
+            let value = data[k] ?? "";
+            let type = "text";
+            let disabled = "";
+
+            // Detect date fields
+            if (k.toLowerCase().includes("date") || k.toLowerCase() === "dob") {
+              type = "date";
+              if (value) {
+                const d = new Date(value);
+                if (!isNaN(d)) {
+                  value = d.toISOString().split("T")[0];
+                }
+              }
+            }
+
+            // Disable primary key
+            if (k === "id") {
+              disabled = "disabled";
+            }
+
+            html += `
+              <div class="mb-2">
+                <label class="form-label">${k}</label>
+                <input
+                  type="${type}"
+                  class="form-control"
+                  name="${k}"
+                  value="${value}"
+                  ${disabled}
+                >
+              </div>`;
+          }
+
+          document.getElementById("edit-row-fields").innerHTML = html; // ✅ FIXED
+          const form = document.getElementById("row-edit-form");
+          form.dataset.rowId = rowId;
+          form.dataset.table = table;
+        });
+    });
+  }
+
+  //delete row modal
+  const deleteModal = document.getElementById("delete_patient");
+  if (deleteModal) {
+    deleteModal.addEventListener("show.bs.modal", function(event) {
+      const button = event.relatedTarget;
+      if (!button) return;
+
+      const rowId = button.dataset.rowId;
+      const table = button.dataset.table;
+
+      document.getElementById("delete-row-id").value = rowId;
+      document.getElementById("delete-table").value = table;
+    });
+  }
+
+
+  // Show success toast
+  function showSuccessToast(message) {
+    const toastEl = document.getElementById("successToast");
+    const bodyEl = document.getElementById("successToastBody");
+
+    if (!toastEl || !bodyEl) {
+      console.error("Toast elements not found in DOM");
+      return;
+    }
+
+    bodyEl.textContent = message;
+    const toast = new bootstrap.Toast(toastEl, { delay: 2500 });
+    toast.show();
+  }
+
+
+  /* =======================
+     SUBMIT EDIT
+  ======================= */
+  const form = document.getElementById("row-edit-form");
+  if (form) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const rowId = this.dataset.rowId;
+      const table = this.dataset.table;
+
+      const data = {};
+      new FormData(this).forEach((v, k) => data[k] = v);
+
+      fetch("/api/db/update-row", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ table, id: rowId, data })
+      })
+      .then(r => r.json())
+      .then(res => {
+        if (res.success) {
+          showSuccessToast("Updated successfully");
+
+          // Optional: close modal
+          const modalEl = document.getElementById("rowEditModal");
+          bootstrap.Modal.getInstance(modalEl)?.hide();
+
+          setTimeout(() => location.reload(), 800);
+        } else {
+          alert(res.error); // keep alert for errors
+        }
+       }); 
+    }); 
+  }
+</script>
+
+  <!-- Success Toast -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="successToast" class="toast text-bg-success" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body" id="successToastBody">
+          Saved successfully
+        </div>
+        <button type="button"
+                class="btn-close btn-close-white me-2 m-auto"
+                data-bs-dismiss="toast"></button>
+      </div>
+    </div>
+  </div>
+
+
+</body>
+
+</html>

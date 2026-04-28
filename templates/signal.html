@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+  <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='img/favicon.png') }}">
+  <title>Integrated Patient Health System</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+
+  <!-- Fontawesome CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='plugins/fontawesome/css/fontawesome.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='plugins/fontawesome/css/all.min.css') }}">
+
+  <!-- Select2 CSS -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/select2.min.css') }}">
+
+  <!-- Datatables CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='plugins/datatables/datatables.min.css') }}">
+
+  <!-- Feathericon CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/feather.css') }}">
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+  <div class="main-wrapper">
+
+    <!-- Header -->
+    <div class="header">
+      <div class="header-left">
+        <a href="{{ url_for('index') }}" class="logo">
+          <img src="{{ url_for('static', filename='upec.png') }}" width="130" height="60" alt="">
+          <span>IPHS</span>
+        </a>
+      </div>
+
+      <a id="toggle_btn" href="javascript:void(0);">
+        <img src="{{ url_for('static', filename='img/icons/bar-icon.svg') }}" alt="">
+      </a>
+
+      <a id="mobile_btn" class="mobile_btn float-start" href="#sidebar">
+        <img src="{{ url_for('static', filename='img/icons/bar-icon.svg') }}" alt="">
+      </a>
+
+      <div class="top-nav-search mob-view">
+        <form>
+          <input type="text" class="form-control" placeholder="Search here">
+          <a class="btn"><img src="{{ url_for('static', filename='img/icons/search-normal.svg') }}" alt=""></a>
+        </form>
+      </div>
+
+      <ul class="nav user-menu float-end">
+        <li class="nav-item dropdown has-arrow user-profile-list">
+          <a href="#" class="dropdown-toggle nav-link user-link" data-bs-toggle="dropdown">
+            <div class="user-names">
+              <h5>OYEYEMI DARE</h5>
+              <span>Admin</span>
+            </div>
+            <span class="user-img">
+              <img src="{{ url_for('static', filename='img/user.jpg') }}" alt="Admin">
+            </span>
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="{{ url_for('profile') }}">My Profile</a>
+            <a class="dropdown-item" href="{{ url_for('edit_profile') }}">Edit Profile</a>
+            <a class="dropdown-item" href="{{ url_for('settings') }}">Settings</a>
+            <a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a href="{{ url_for('settings') }}" class="hasnotifications nav-link" style="color: black;">
+            <img src="{{ url_for('static', filename='img/icons/setting-icon-01.svg') }}" alt=""> Help
+          </a>
+        </li>
+      </ul>
+
+      <div class="dropdown mobile-user-menu float-end">
+        <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fa-solid fa-ellipsis-vertical"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-end">
+          <a class="dropdown-item" href="{{ url_for('profile') }}">My Profile</a>
+          <a class="dropdown-item" href="{{ url_for('edit_profile') }}">Edit Profile</a>
+          <a class="dropdown-item" href="{{ url_for('settings') }}">Settings</a>
+          <a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a>
+        </div>
+      </div>
+    </div>
+    <!-- /Header -->
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-inner slimscroll">
+        <div id="sidebar-menu" class="sidebar-menu">
+          <ul>
+            <li class="menu-title">Main</li>
+            <li class="submenu">
+                <a href="javascript:void(0);">
+                    <span class="menu-side">
+                        <img src="{{ url_for('static', filename='img/icons/menu-icon-01.svg') }}" alt="">
+                    </span> 
+                    <span> Menu </span> 
+                    <span class="menu-arrow"></span>
+                </a>
+                <ul style="display: none;">
+                    <li class="submenu">
+                        <a href="javascript:void(0);">
+                            <span> FIle</span> <span class="menu-arrow"></span>
+                        </a>
+                        <ul style="display: none;">
+                            <li><a href="{{ url_for('load_data', source='file') }}">Load Data from file</a></li>
+                            <li><a href="{{ url_for('load_data', source='db') }}">Load From Database</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                      <a href="javascript:void(0);"> <span> View</span> <span class="menu-arrow"></span></a>
+                      <ul style="display: none;">
+                          <li><a href="{{ url_for('patient_mgm') }}">Data Processing Panel</a></li>
+                          <li><a href="{{ url_for('image_processing') }}">Image Processing Panel</a></li>
+                          <li><a href="{{ url_for('health') }}">Data Analysis Panel</a></li>
+                          <li><a href="{{ url_for('signal') }}">Signal Processing Panel</a></li>
+                      </ul>
+                    </li>                                
+                    <li><a href="{{ url_for('settings') }}">Help</a></li>
+                </ul>
+            </li>
+
+            <li class="menu-title">Functionalities</li>
+            <li class="submenu">
+                <a href="javascript:void(0);">
+                    <i class="fa fa-share-alt"></i> <span>Functionalities</span> <span class="menu-arrow"></span>
+                </a>
+                <ul style="display: block;">
+                    <li class="submenu">
+                        <a href="javascript:void(0);"><span>Patient Data Management</span> <span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li><a href="{{ url_for('load_data') }}"><span>Load Datasets</span></a></li>
+                            <li><a href="{{ url_for('patient_mgm') }}"><span>Manage Database Records</span></a></li>                                        
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                      <a href="{{ url_for('image_processing') }}"><span>Medical Image Processing</span> <span class="menu-arrow"></span></a>
+                      <ul style="display: none;">
+                          <li><a href="{{ url_for('img_processing') }}"><span>Grayscale Conversion</span></a></li>
+                          <li><a href="{{ url_for('img_processing') }}"><span>Edge Detection</span></a></li>   
+                          <li><a href="{{ url_for('img_processing') }}"><span>Image Difference</span></a></li>                                     
+                      </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="{{ url_for('health') }}"><span>Health Data Analysis</span> <span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li><a href="{{ url_for('health') }}"><span>Filter Patient Data</span></a></li>
+                            <li><a href="{{ url_for('health') }}"><span>Clean Patient Data</span></a></li> 
+                            <li><a href="{{ url_for('health') }}"><span>Analyze Patient Health Metrics</span></a></li>                                                                               
+                        </ul>
+                    </li>
+                    <li class="submenu active">
+                        <a href="{{ url_for('signal') }}"><span >Signal Processing</span> <span class="menu-arrow"></span></a>
+                        <ul style="display: block;">
+                            <li><a href="{{ url_for('signal_processing') }}"><span>Frequency Domain Analysis</span></a></li> 
+                            <li><a href="{{ url_for('signal_processing') }}"><span>Time Domain Analysis</span></a></li>
+                            <li><a href="{{ url_for('signal_processing') }}"><span>Spectrum Analysis</span></a></li>                                      
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>   
+
+          <div class="logout-btn">
+            <a href="{{ url_for('logout') }}">
+              <span class="menu-side">
+                <img src="{{ url_for('static', filename='img/icons/logout.svg') }}" alt="">
+              </span>
+              <span>Logout</span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- /Sidebar -->
+
+    <!-- Page Wrapper -->
+    <div class="page-wrapper">
+        <div class="content">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Dashboard </a></li>
+                            <li class="breadcrumb-item"><i class="feather-chevron-right"></i></li>
+                            <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Functionalities </a></li>
+                            <li class="breadcrumb-item"><i class="feather-chevron-right"></i></li>
+                            <li class="breadcrumb-item active">Signal Processing</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /Page Header -->
+            <div class="good-morning-blk">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="morning-user">
+                            <h2>Hi 👋, <span>Oyeyemi</span></h2>
+                            <p>What would you like to do on Signal Processing...</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 position-blk">
+                        <div class="morning-img">
+                            <img src="{{ url_for('static', filename='img/morning-img-01.png') }}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-lg-6 col-xl-6">
+                    <div class="dash-widget">
+                        <div class="dash-boxs comman-flex-center">
+                            <img src="{{ url_for('static', filename='img/icons/chat-icon-05.svg') }}" alt="">
+                        </div>
+                        <div class="dash-content dash-count">
+                            <h4><a href="{{ url_for('signal_processing') }}"> Signal Processing</a></h4>
+                            <p><span class=""><i class="feather-info me-1"></i>Perform medical signal processing tasks</span></p>
+                        </div>
+                    </div>
+                    <div class="dash-widget">
+                        <div class="dash-content dash-count">
+                            <h4>Tasks to perform:</h4>
+                            <p><a href="{{ url_for('signal_processing') }}" class="passive-view"><i class="feather-info me-1"></i>Signal Loading</span></a></p><br/>
+                            <p><a href="{{ url_for('signal_processing') }}" class="passive-view"><i class="feather-info me-1"></i>Fast Fourier Transform (FFT)</span></a></p><br/>
+                            <p><a href="{{ url_for('signal_processing') }}" class="passive-view"><i class="feather-info me-1"></i>Spectrum Analysis</span></a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-6 col-xl-6">
+                    <div class="card">
+                        <div class="card-body card-buttons">
+                            <!-- START carousel-->
+                            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" data-bs-interval="1500">
+                                <div class="carousel-inner" role="listbox">
+                                    <div class="carousel-item active">
+                                        <img class="d-block img-fluid" src="{{ url_for('static', filename='img/signal3.png') }}" alt="First slide">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img class="d-block img-fluid" src="{{ url_for('static', filename='img/signal4.png') }}" alt="Second slide">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img class="d-block img-fluid" src="{{ url_for('static', filename='img/signal1.png') }}" alt="Third slide">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img class="d-block img-fluid" src="{{ url_for('static', filename='img/signal2.png') }}" alt="Third slide">
+                                    </div>
+                                </div>
+                                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END carousel-->
+            </div>
+        </div>
+    <!-- /Page Wrapper -->
+    </div>
+
+  <div class="sidebar-overlay" data-reff=""></div>
+
+  <!-- Scripts -->
+  <script src="{{ url_for('static', filename='js/jquery-3.7.1.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/feather.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.slimscroll.js') }}"></script>
+
+  <script src="{{ url_for('static', filename='js/select2.min.js') }}"></script>
+
+  <script src="{{ url_for('static', filename='plugins/datatables/jquery.dataTables.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='plugins/datatables/datatables.min.js') }}"></script>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+</body>
+
+</html>

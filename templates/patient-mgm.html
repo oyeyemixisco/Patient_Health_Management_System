@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <link rel="shortcut icon" type="image/x-icon" href="../static/img/favicon.png">
+    <title>Integrated Patient Health System</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	
+	<!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css">
+	
+	<!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="../static/plugins/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="../static/plugins/fontawesome/css/all.min.css">
+	
+	<!-- Select2 CSS -->
+	<link rel="stylesheet" type="text/css" href="../static/css/select2.min.css">
+	
+	<!-- Datatables CSS -->
+	<link rel="stylesheet" href="../static/plugins/datatables/datatables.min.css">
+	
+	<!-- Feathericon CSS -->
+	<link rel="stylesheet" href="../static/css/feather.css">
+	
+	<!-- Main CSS -->
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+     
+</head>
+
+<body>
+    <div class="main-wrapper">
+        <div class="header">
+			<div class="header-left">
+				<a href="index.html" class="logo">
+					<img src="../static/upec.png" width="130" height="60" alt=""> <span>IPHS</span>
+				</a>
+			</div>
+			<a id="toggle_btn" href="javascript:void(0);"><img src="../static/img/icons/bar-icon.svg"  alt=""></a>
+            <a id="mobile_btn" class="mobile_btn float-start" href="#sidebar"><img src="../static/img/icons/bar-icon.svg"  alt=""></a>
+			<div class="top-nav-search mob-view">
+				<form>
+					<input type="text" class="form-control" placeholder="Search here">
+					<a class="btn" ><img src="../static/img/icons/search-normal.svg" alt=""></a>
+				</form>
+			</div>
+            <ul class="nav user-menu float-end">
+				<li class="nav-item dropdown has-arrow user-profile-list">
+                    <a href="#" class="dropdown-toggle nav-link user-link" data-bs-toggle="dropdown">
+						<div class="user-names">
+							<h5>OYEYEMI DARE</h5>
+                        	<span>Admin</span>
+						</div>
+						<span class="user-img">
+							<img  src="../static/img/user.jpg"  alt="Admin">
+						</span>
+                    </a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="profile.html">My Profile</a>
+						<a class="dropdown-item" href="edit-profile.html">Edit Profile</a>
+						<a class="dropdown-item" href="settings.html">Settings</a>
+						<a class="dropdown-item" href="login.html">Logout</a>
+					</div>
+                </li>
+				<li class="nav-item ">
+                    <a href="settings.html"  class="hasnotifications nav-link" style="color: black;"><img src="../static/img/icons/setting-icon-01.svg" alt=""> Help </a>
+                </li>
+            </ul>
+            <div class="dropdown mobile-user-menu float-end">
+                <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></a>
+                <div class="dropdown-menu dropdown-menu-end">
+                    <a class="dropdown-item" href="profile.html">My Profile</a>
+                    <a class="dropdown-item" href="edit-profile.html">Edit Profile</a>
+                    <a class="dropdown-item" href="settings.html">Settings</a>
+                    <a class="dropdown-item" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-inner slimscroll">
+                <div id="sidebar-menu" class="sidebar-menu">
+                    <ul>
+                        <li class="menu-title">Main</li>
+						<li class="submenu">
+							<a href="#"><span class="menu-side"><img src="../static/img/icons/menu-icon-01.svg" alt=""></span> <span> Menu </span> <span class="menu-arrow"></span></a>
+							<ul style="display: block;">
+								<li class="submenu">
+									<a href="javascript:void(0);"> <span> File</span> <span class="menu-arrow"></span></a>
+									<ul style="display: none;">
+										<li><a href="{{ url_for('load_data') }}">Load Data from file</a></li>
+										<li><a href="{{ url_for('load_data', source='db') }}">Load From Database</a></li>
+									</ul>
+								</li>
+                                <li class="submenu">
+                                    <a href="javascript:void(0);"> <span> View</span> <span class="menu-arrow"></span></a>
+                                    <ul style="display: none;">
+                                        <li><a href="{{ url_for('patient_mgm') }}">Data Processing Panel</a></li>
+                                        <li><a href="{{ url_for('image_processing') }}">Image Processing Panel</a></li>
+                                        <li><a href="{{ url_for('health') }}">Data Analysis Panel</a></li>
+                                        <li><a href="{{ url_for('signal') }}">Signal Processing Panel</a></li>
+                                    </ul>
+                                </li>    						
+								<li><a href="patient-dashboard.html">Help</a></li>
+							</ul>
+						</li>
+
+						<li class="menu-title">Functionalities</li>
+                        <li class="submenu">
+                            <a href="javascript:void(0); " class="active"><i class="fa fa-share-alt"></i> <span>Functionalities</span> <span class="menu-arrow"></span></a>
+                            <ul style="display: block;">
+                                <li class="submenu active">
+                                    <a href="javascript:void(0);"><span>Patient Data Management</span> <span class="menu-arrow"></span></a>
+                                    <ul>
+                                        <li><a href="javascript:void(0);"><span>Load Datasets</span></a></li>
+                                        <li><a href="javascript:void(0);"><span>Manage Database Records</span></a></li>                                        
+                                    </ul>
+                                </li>
+                                <li class="submenu">
+                                    <a href="{{ url_for('image_processing') }}"><span>Medical Image Processing</span> <span class="menu-arrow"></span></a>
+                                    <ul style="display: none;">
+                                        <li><a href="{{ url_for('img_processing') }}"><span>Grayscale Conversion</span></a></li>
+                                        <li><a href="{{ url_for('img_processing') }}"><span>Edge Detection</span></a></li>   
+                                        <li><a href="{{ url_for('img_processing') }}"><span>Image Difference</span></a></li>                                     
+                                    </ul>
+                                </li>
+                                <li class="submenu">
+                                    <a href="{{ url_for('health') }}"><span>Health Data Analysis</span> <span class="menu-arrow"></span></a>
+                                    <ul style="display: none;">
+                                        <li><a href="{{ url_for('health') }}"><span>Filter Patient Data</span></a></li>
+                                        <li><a href="{{ url_for('health') }}"><span>Clean Patient Data</span></a></li> 
+                                        <li><a href="{{ url_for('health') }}"><span>Analyze Patient Health Metrics</span></a></li>                                                                               
+                                    </ul>
+                                </li>
+                                <li class="submenu">
+                                    <a href="javascript:void(0);"><span>Signal Processing</span> <span class="menu-arrow"></span></a>
+                                    <ul style="display: none;">
+                                        <li><a href="javascript:void(0);"><span>Frequency Domain Analysis</span></a></li> 
+                                        <li><a href="javascript:void(0);"><span>Time Domain Analysis</span></a></li>
+                                        <li><a href="javascript:void(0);"><span>Spectrum Analysis</span></a></li>                                      
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>   
+					<div class="logout-btn">
+						<a href="login.html"><span class="menu-side"><img src="../static/img/icons/logout.svg" alt=""></span> <span>Logout</span></a>
+					</div>
+                </div>
+            </div>
+        </div>
+        <div class="page-wrapper">
+            <div class="content">
+			
+				<!-- Page Header -->
+				<div class="page-header">
+					<div class="row">
+						<div class="col-sm-12">
+							<ul class="breadcrumb">
+								<li class="breadcrumb-item"><a href="{{ url_for('index') }}">Dashboard </a></li>
+								<li class="breadcrumb-item"><i class="feather-chevron-right"></i></li>
+                                <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Functionalities </a></li>
+								<li class="breadcrumb-item"><i class="feather-chevron-right"></i></li>
+								<li class="breadcrumb-item active">Patient Data Management</li>
+							</ul>
+                            {% with messages = get_flashed_messages(with_categories=True) %}
+                            {% if messages %}
+                                {% for category, message in messages %}
+                                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert" style="margin-top:15px;">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                                {% endfor %}
+                            {% endif %}
+                            {% endwith %}
+
+						</div>
+					</div>
+				</div>
+				<!-- /Page Header -->
+				
+				<div class="good-morning-blk">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="morning-user">
+								<h2>Bonjour 👋, <span>Oyeyemi</span></h2>
+								<p>What would you like to do on Data Loading & Management...</p>
+							</div>
+						</div>
+						<div class="col-md-6 position-blk">
+							<div class="morning-img">
+								<img src="{{ url_for('static', filename='img/morning-img-02.png') }}" alt="">
+							</div>
+						</div>
+					</div>
+				</div>
+				
+                <div class="row">
+                    
+                    <div class="col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                        <div class="dash-widget">
+                            <div class="dash-boxs comman-flex-center">
+                                <img src="{{ url_for('static', filename='img/icons/profile-user.svg') }}" alt="">
+                            </div>
+                            <div class="dash-content dash-count">
+                                <h4>
+                                    <a href="{{ url_for('patients_list') }}" style="color: red !important;">
+                                        View Patient Records
+                                    </a>
+                                </h4>
+
+                                <!-- TOTAL PATIENTS FROM DB -->
+                                <h2>{{ total_patients }}</h2>
+                                
+                                <p>
+                                    <span class="passive-view">
+                                        <i class="feather-info me-1"></i>
+                                        Total number of Dummy Patient records in Database
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="struct-point">
+                            <div class="card patient-structure">
+                                <div class="card-body">
+                                    <a href="{{ url_for('load_data') }}">
+                                        <div class="dash-boxs comman-flex-center">
+                                            <img src="{{ url_for('static', filename='img/icons/folder-icon-01.svg') }}" alt="">
+                                        </div>
+                                        <h5>Load Data from File</h5>
+                                        <h3>
+                                            <span class="status-green">Click to load data from file</span>
+                                        </h3>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+
+            <div class="col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                <div class="struct-point">
+                    <div class="card patient-structure">
+                        <div class="card-body">
+                            <h5>Male Patients</h5>
+                            <h3>
+                                {{ male_patients }}
+                                <span class="status-green">Total number of male patients</span>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="card patient-structure">
+                        <div class="card-body">
+                            <h5>Female Patients</h5>
+                            <h3>
+                                {{ female_patients }}
+                                <span class="status-blue">Total number of female patients</span>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="card patient-structure">
+                        <div class="card-body">
+                            <a href="{{ url_for('load_data', source='db') }}">
+                                <div class="dash-boxs comman-flex-center">
+                                    <img src="{{ url_for('static', filename='img/icons/bar-icon.svg') }}" alt="">
+                                </div>
+                                <h5>Load Data from Database</h5>
+                                <h3>
+                                    <span class="status-blue">Click to load data from file</span>
+                                </h3>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div id="radial-patients"></div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sidebar-overlay" data-reff=""></div>
+	
+	<!-- jQuery -->
+    <script src="../static/js/jquery-3.7.1.min.js"></script>
+	
+	<!-- Bootstrap Core JS -->
+    <script src="../static/js/bootstrap.bundle.min.js"></script>
+	
+	<!-- Feather Js -->
+	<script src="../static/js/feather.min.js"></script>
+	
+	<!-- Slimscroll -->
+    <script src="../static/js/jquery.slimscroll.js"></script>
+	
+	<!-- Select2 Js -->
+	<script src="../static/js/select2.min.js"></script>
+	
+	<!-- Datatables JS -->
+	<script src="../static/plugins/datatables/jquery.dataTables.min.js"></script>
+	<script src="../static/plugins/datatables/datatables.min.js"></script>
+	
+	<!-- counterup JS -->
+	<script src="../static/js/jquery.waypoints.js"></script>
+	<script src="../static/js/jquery.counterup.min.js"></script>
+	
+	<!-- Apexchart JS -->
+    <script>
+        window.malePatients   = {{ male_patients | default(0) }};
+        window.femalePatients = {{ female_patients | default(0) }};
+    </script>
+
+	<script src="{{ url_for('static', filename='plugins/apexchart/apexcharts.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='plugins/apexchart/chart-data.js') }}"></script>
+	
+	<!-- Custom JS -->
+    <script src="../static/js/app.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+  <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='img/favicon.png') }}">
+  <title>Integrated Patient Health System</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+
+  <!-- Fontawesome CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='plugins/fontawesome/css/fontawesome.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='plugins/fontawesome/css/all.min.css') }}">
+
+  <!-- Select2 CSS -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/select2.min.css') }}">
+
+  <!-- Datatables CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='plugins/datatables/datatables.min.css') }}">
+
+  <!-- Feathericon CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/feather.css') }}">
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <div class="main-wrapper">
+
+    <!-- Header -->
+    <div class="header">
+      <div class="header-left">
+        <a href="{{ url_for('index') }}" class="logo">
+          <img src="{{ url_for('static', filename='upec.png') }}" width="130" height="60" alt="">
+          <span>IPHS</span>
+        </a>
+      </div>
+
+      <a id="toggle_btn" href="javascript:void(0);">
+        <img src="{{ url_for('static', filename='img/icons/bar-icon.svg') }}" alt="">
+      </a>
+
+      <a id="mobile_btn" class="mobile_btn float-start" href="#sidebar">
+        <img src="{{ url_for('static', filename='img/icons/bar-icon.svg') }}" alt="">
+      </a>
+
+      <div class="top-nav-search mob-view">
+        <form>
+          <input type="text" class="form-control" placeholder="Search here">
+          <a class="btn"><img src="{{ url_for('static', filename='img/icons/search-normal.svg') }}" alt=""></a>
+        </form>
+      </div>
+
+      <ul class="nav user-menu float-end">
+        <li class="nav-item dropdown has-arrow user-profile-list">
+          <a href="#" class="dropdown-toggle nav-link user-link" data-bs-toggle="dropdown">
+            <div class="user-names">
+              <h5>OYEYEMI DARE</h5>
+              <span>Admin</span>
+            </div>
+            <span class="user-img">
+              <img src="{{ url_for('static', filename='img/user.jpg') }}" alt="Admin">
+            </span>
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="{{ url_for('profile') }}">My Profile</a>
+            <a class="dropdown-item" href="{{ url_for('edit_profile') }}">Edit Profile</a>
+            <a class="dropdown-item" href="{{ url_for('settings') }}">Settings</a>
+            <a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a href="{{ url_for('settings') }}" class="hasnotifications nav-link" style="color: black;">
+            <img src="{{ url_for('static', filename='img/icons/setting-icon-01.svg') }}" alt=""> Help
+          </a>
+        </li>
+      </ul>
+
+      <div class="dropdown mobile-user-menu float-end">
+        <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fa-solid fa-ellipsis-vertical"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-end">
+          <a class="dropdown-item" href="{{ url_for('profile') }}">My Profile</a>
+          <a class="dropdown-item" href="{{ url_for('edit_profile') }}">Edit Profile</a>
+          <a class="dropdown-item" href="{{ url_for('settings') }}">Settings</a>
+          <a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a>
+        </div>
+      </div>
+    </div>
+    <!-- /Header -->
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-inner slimscroll">
+        <div id="sidebar-menu" class="sidebar-menu">
+          <ul>
+            <li class="menu-title">Main</li>
+            <li class="submenu">
+                <a href="javascript:void(0);">
+                    <span class="menu-side">
+                        <img src="{{ url_for('static', filename='img/icons/menu-icon-01.svg') }}" alt="">
+                    </span> 
+                    <span> Menu </span> 
+                    <span class="menu-arrow"></span>
+                </a>
+                <ul style="display: none;">
+                    <li class="submenu">
+                        <a href="javascript:void(0);">
+                            <span> FIle</span> <span class="menu-arrow"></span>
+                        </a>
+                        <ul style="display: none;">
+                            <li><a href="{{ url_for('load_data', source='file') }}">Load Data from file</a></li>
+                            <li><a href="{{ url_for('load_data', source='db') }}">Load From Database</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="javascript:void(0);">
+                            <span> View</span> <span class="menu-arrow"></span>
+                        </a>
+                        <ul style="display: none;">
+                          <li><a href="{{ url_for('patient_mgm') }}">Data Processing Panel</a></li>
+                          <li><a href="{{ url_for('image_processing') }}">Image Processing Panel</a></li>
+                          <li><a href="{{ url_for('health') }}">Data Analysis Panel</a></li>
+                          <li><a href="{{ url_for('signal') }}">Signal Processing Panel</a></li>
+                        </ul>
+                        
+                    </li>                              
+                    <li><a href="{{ url_for('settings') }}">Help</a></li>
+                </ul>
+            </li>
+
+            <li class="menu-title">Functionalities</li>
+            <li class="submenu">
+                <a href="javascript:void(0);">
+                    <i class="fa fa-share-alt"></i> <span>Functionalities</span> <span class="menu-arrow"></span>
+                </a>
+                <ul style="display: block;">
+                    <li class="submenu">
+                        <a href="javascript:void(0);"><span>Patient Data Management</span> <span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li><a href="{{ url_for('load_data') }}"><span>Load Datasets</span></a></li>
+                            <li><a href="{{ url_for('patient_mgm') }}"><span>Manage Database Records</span></a></li>                                        
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                      <a href="{{ url_for('image_processing') }}"><span>Medical Image Processing</span> <span class="menu-arrow"></span></a>
+                      <ul style="display: none;">
+                          <li><a href="{{ url_for('img_processing') }}"><span>Grayscale Conversion</span></a></li>
+                          <li><a href="{{ url_for('img_processing') }}"><span>Edge Detection</span></a></li>   
+                          <li><a href="{{ url_for('img_processing') }}"><span>Image Difference</span></a></li>                                     
+                      </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="{{ url_for('health') }}"><span>Health Data Analysis</span> <span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li><a href="{{ url_for('health') }}"><span>Filter Patient Data</span></a></li>
+                            <li><a href="{{ url_for('health') }}"><span>Clean Patient Data</span></a></li> 
+                            <li><a href="{{ url_for('health') }}"><span>Analyze Patient Health Metrics</span></a></li>                                                                               
+                        </ul>
+                    </li>
+                    <li class="submenu active">
+                        <a href="{{ url_for('signal') }}"><span >Signal Processing</span> <span class="menu-arrow"></span></a>
+                        <ul style="display: block;">
+                            <li><a href="{{ url_for('signal_processing') }}"><span>Frequency Domain Analysis</span></a></li> 
+                            <li><a href="{{ url_for('signal_processing') }}"><span>Time Domain Analysis</span></a></li>
+                            <li><a href="{{ url_for('signal_processing') }}"><span>Spectrum Analysis</span></a></li>                                      
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>   
+
+          <div class="logout-btn">
+            <a href="{{ url_for('logout') }}">
+              <span class="menu-side">
+                <img src="{{ url_for('static', filename='img/icons/logout.svg') }}" alt="">
+              </span>
+              <span>Logout</span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- /Sidebar -->
+
+    <!-- Page Wrapper -->
+    <div class="page-wrapper">
+        <div class="content">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Dashboard </a></li>
+                            <li class="breadcrumb-item"><i class="feather-chevron-right"></i></li>
+                            <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Functionalities </a></li>
+                            <li class="breadcrumb-item"><i class="feather-chevron-right"></i></li>
+                            <li class="breadcrumb-item active">Signal Processing Tasks</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /Page Header -->
+             <div class="good-morning-blk">
+                <div class="row">
+                    <div class="col-md-8 col-sm-8 col-lg-8 col-xl-8">
+                        <div class="morning-user dash-content">
+                            <h3 style="color: rgb(73, 3, 196);"><strong>Signal Processing Tasks</strong></h3>
+                            <p><i class="feather-info me-1"></i>On this page you can perform signal processing tasks.</p><br/>
+                            <p style="color: rgb(87, 87, 87);">Upload signal (ECG or EEG) dataset and check control panel for signal processing tasks. <i style="color: rgb(237, 72, 72);">*</i></p>
+                            <div class="d-flex align-items-center gap-4" style="margin-top: 5px;">
+                              <input class="form-control flex-grow-1" type="file" id="signalFileInput" required accept=".csv">
+
+                              <div class="d-flex gap-4 align-items-center" style="margin-top: 5px; display: none !important;">
+                                  <div style="width: 60%; font-size: medium;">Sampling Rate (Hz)</div>
+                                  <input type="number" id="fsInput" class="form-control" value="250" min="100" max="1000">
+                              </div>
+                              
+                              <div class="d-flex align-items-center gap-2 flex-nowrap">
+                                <span class="fw-medium" style="white-space: nowrap;">Duration (Secs)</span>
+                                <select id="durationSelect" class="form-select" style="width: 70px;">
+                                  <option value="1" >1</option>
+                                  <option value="3" >3</option>
+                                  <option value="5" selected>5</option>
+                                  <option value="8">8</option>
+                                  <option value="10">10</option>
+                                  <option value="12">12</option>
+                                  <option value="14">14</option>
+                                  <option value="16">16</option>
+                                  <option value="18">18</option>
+                                  <option value="20">20</option>
+                                </select>
+                              </div>
+                              <button class="btn btn-primary w-50" onclick="loadSignalOperation()">
+                                  Load Signal
+                              </button>
+                            </div>
+                            
+                            <small class="text-muted">
+                                <span style="color: rgb(237, 72, 72);"><i class="feather-alert-triangle me-1"></i>Supported format: .csv</span>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-lg-6 sticky-panel" style="flex: 0 35%; max-width: 35%;">
+                    <div class="dash-widget">
+                        <div class="dash-content">
+                            <h4 style="color: rgb(55, 0, 158);"> 🛠️ <span style="font-size: large;">Control Panel</span></h4>
+                            <small style="color: rgb(2, 170, 44);"><i class="feather-info me-1"></i>Manage parameter to process signal</small>
+                            <hr>
+
+                            <p style="font-weight: bold; color: black;">Noise Injection</p>
+
+                            <div class="d-flex align-items-center gap-2 flex-nowrap" style="margin-top: 5px;">
+                              <span style="font-size: 14px; white-space: nowrap;">Noise Type:</span>
+                              <select id="noiseType" class="form-select">
+                                <option value="gaussian" selected>Gaussian</option>
+                                <option value="powerline">Powerline(50Hz)</option>
+                              </select>
+
+                              <span style="font-size: 14px; white-space: nowrap;">Level:</span>
+                              <input type="number" id="noiseLevel" class="form-control"
+                                    value="0.05" min="0" max="5" step="0.01" placeholder="e.g., 0.05">
+                            </div>
+
+                            <div class="d-flex gap-2 align-items-center" style="margin-top: 12px;">
+                              <button class="btn btn-warning w-50" type="button" onclick="addNoiseOperation()">
+                                Add Noise
+                              </button>
+                              <button class="btn btn-outline-danger w-50" type="button" onclick="resetSignalOperation()">
+                                Reset Signal
+                              </button>
+                            </div>
+
+                            <div id="visualizationToggles" class="d-flex gap-2 align-items-center" style="margin-top: 10px; display: none !important;">
+                              <div class="form-check form-switch">
+                                  <input class="form-check-input" type="checkbox" id="showClean" checked onchange="updateChartVisibility()">
+                                  <small class="form-check-label" for="showClean" style="font-size: 12.5px;">Show Clean Signal</small>
+                              </div>
+                              <div class="form-check form-switch">
+                                  <input class="form-check-input" type="checkbox" id="showNoisy" checked onchange="updateChartVisibility()">
+                                  <small class="form-check-label" for="showNoisy" style="font-size: 12.5px;">Show Noisy Signal</small>
+                              </div>
+                            </div>
+
+                          
+                            <hr>
+                            <p style="font-weight: bold; color: black;">Signal Filtering (FIR)</p>
+                            <small class="text-muted"><i class="feather-info me-1"></i>Apply filters to remove noise.</small>
+
+                            <div class="d-flex align-items-center gap-2 flex-nowrap" style="margin-top: 10px;">
+                              <span style="white-space: nowrap; font-size: 14px;">Filter Type:</span>
+                              <select style="width: fit-content;" id="filterType" class="form-select" onchange="toggleFilterInputs()">
+                                <option value="lowpass">Low-pass</option>
+                                <option value="highpass">High-pass</option>
+                                <option value="bandpass">Band-pass</option>
+                                <option value="bandstop">Band-stop</option>
+                              </select>
+
+                              <span style="white-space: nowrap; font-size: 14px;">Order</span>
+                              <input type="number" id="filterOrder" class="form-control" value="64" min="2" max="512">
+                            </div>
+
+                            <div class="d-flex gap-2 align-items-center flex-nowrap" style="margin-top: 10px;">
+                              <span style="white-space: nowrap; font-size: 14px;" id="cutoff1Label">Cutoff (Hz):</span>
+                              <input style="width: 25%;" type="number" id="cutoff1" class="form-control" value="30">
+
+                              <div id="cutoff2Container" class="d-flex gap-2 align-items-center flex-nowrap" style="display: none !important;">
+                                <span style="white-space: nowrap; font-size: 14px;">High Cut (Hz):</span>
+                                <input style="width: 90px;" type="number" id="cutoff2" class="form-control" value="50">
+                              </div>
+                            </div>
+                            
+
+                            <div class="d-flex gap-2 align-items-center" style="margin-top: 12px;">
+                              <button class="btn btn-success w-100" type="button" onclick="applyFilterOperation()">
+                                Apply Filter
+                              </button>
+                            </div>
+
+                            
+
+                            <hr>
+
+                            <p style="margin-bottom: 10px; font-weight: bold; color: black;">Fast Fourier Transform(FFT) Settings</p>
+                            <div class="d-flex gap-2 align-items-center  flex-nowrap" style="margin-top: 10px; ">
+                                <span style="white-space: nowrap; font-size: 14px;">Window Start:</span>
+                                <input  type="number" id="winStart" class="form-control" value="0" min="0" max="100" step="0.2">
+
+                                <span style="white-space: nowrap; font-size: 14px;">Window Length:</span>
+                                <input type="number" id="winLen" class="form-control" value="2" min="2" max="20" step="0.1">
+                            </div>
+
+                            <div class="d-flex gap-4 align-items-center" style="margin-top: 15px;">
+                                
+                                <small class="text-muted" style="font-size: small; width: 55%;"><span style="font-size: medium; color: black;">N-FFT Points:</span><br/>
+                                    <i class="feather-info me-1"></i>Adjust Slider value for FFT computation
+                                </small>
+                                <div class="range-container" style="width: 45%; margin-top: 20px;">
+                                    <span id="rangeValue" class="range-label">256</span>
+                                    <input type="range" class="form-range" min="32" max="1024" step="32" value="256" id="nfft">
+                                </div>
+                            </div>
+                            <div class="d-flex gap-5 align-items-center" style="margin-top: 15px;">
+                                <button class="btn btn-primary w-45" onclick="computeFftOperation()">
+                                    Compute FFT
+                                </button>
+
+                                <div class="mt-2 d-flex align-items-center justify-content-between">
+                                    <div class="form-check form-switch">
+                                        <small class="form-check-label" for="autoUpdateFft">Auto-compute FFT</small>
+                                        <input class="form-check-input" type="checkbox" id="autoUpdateFft" checked>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <hr>
+
+                            <p style="margin-bottom: 10px; font-weight: bold; color: black;">Visualization Controls</p>
+                            <div class="d-flex gap-4 align-items-center" style="margin-top: 15px;">
+                                <small class="text-muted" style="font-size: small; width: 55%;">
+                                    <i class="feather-info me-1"></i>Frequency Range Slider | Min. 20 Hz, Max. 100 Hz
+                                </small>
+                                <div class="range-container" style="width: 45%; margin-top: 40px;">
+                                    <span id="freqLabel" class="range-label">50</span>
+                                    <input type="range" class="form-range" min="20" step="10" max="100" value="50" id="frequencyRange">
+                                </div>
+                            </div>
+                            <div class="d-flex gap-4 align-items-center" style="margin-top: 5px; display: none !important;">
+                                <small class="text-muted" style="font-size: small; width: 55%;">
+                                    <i class="feather-info me-1"></i>Use control to zoom in/out frequency spectrum
+                                </small>
+                                <div class="range-container" style="width: 45%; margin-top: 40px;">
+                                    <span id="zoomLabel" class="range-label">1x</span>
+                                    <input type="range" class="form-range" min="1" max="5" step="0.1" value="1" id="zoomRange">
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex gap-4 align-items-center" style="margin-top: 10px; display: none !important;">
+                                <div style="width: 50%;">
+                                    <label for="yScale" style="font-size: medium;">Y-Axis Scale:</label>
+                                </div>
+                                <div style="width: 50%;">
+                                    <input type="radio" id="linearScale" name="yScale" value="linear" checked>
+                                    <label for="linearScale" style="margin-right: 10px;">Linear</label>
+                                    <input type="radio" id="logScale" name="yScale" value="log">
+                                    <label for="logScale">Log</label>
+                                </div>
+                            </div>
+                            <!-- <small class="text-muted" style="font-size: small;">
+                                <i class="feather-info me-1"></i>
+                                The toggle allows you to inspect both dominant and low-amplitude 
+                                freq. components by switching between linear and logarithmic representations.
+                            </small> -->
+                        </div>
+
+                        <div class="card-buttons" style="margin-top: 40px;">
+                            <a href="javascript: void(0);"  onclick="resetAll()" class="btn btn-danger waves-effect waves-light">Reset</a>
+                        </div>
+                    </div>
+                    <!-- end left card-->
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-6" style="flex: 0 0 65%; max-width: 65%;">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="dash-widget">
+                                <div class="dash-content">
+                                    <h4 style="color: rgb(55, 0, 158);"> 🕘 <span style="font-size: large;">Time Domain Signal</span></h4>
+                                    <p><i class="feather-info me-1"></i>Visualization of Raw Biomedical Signal in Time Domain.
+                                    </p>
+                                    <hr>
+
+                                    <div id="noiseBox" class="hr-chip" style="display:none;">
+                                      <strong>Noise: </strong><span id="noiseStatus"></span>
+                                    </div>
+
+
+                                    <canvas id="timeChart" height="150"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end top right card-->
+
+                        <!-- filter signal card -->
+                        <div class="col-12" id="filteredSignalCard" style="display: none;">
+                          <div class="dash-widget">
+                              <div class="dash-content">
+                                  <h4 style="color: rgb(2, 170, 44);"> <span style="font-size: large;">Filtered Signal (FIR Output)</span></h4>
+                                  <p><i class="feather-info me-1"></i>Result of the FIR filter applied to the noisy data.</p>
+                                  <hr>
+                                  <div style="position: relative; height: 350px; width: 100%;">
+                                      <canvas id="filterChart"></canvas>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+                        <!-- end filtered signal card -->
+
+                        <div class="col-12">
+                            <div class="dash-widget">
+                                <div class="dash-content">
+                                    <h4 style="color: rgb(55, 0, 158);"> 📈 <span style="font-size: large;">Frequency Domain Spectrum</span></h4>
+                                    <p><i class="feather-info me-1"></i>Visualization of FFT Results and enables frequency domain analysis.
+                                    </p>
+                                    <hr>
+                                    <div id="hrBox" class="hr-chip" style="display:none;">
+                                    Estimated Heart Rate:  <strong><span id="hrValue"></span></strong>
+                                        <small>(Peak: <span id="peakFreq"></span> Hz)</small>
+                                    </div>
+
+                                    <canvas id="fftChart" height="150"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end bottom right card-->
+                    </div>
+                </div>
+
+            </div>
+            
+        </div>
+    <!-- /Page Wrapper -->
+    </div>
+
+  <div class="sidebar-overlay" data-reff=""></div>
+
+  <!-- Scripts -->
+  <script src="{{ url_for('static', filename='js/jquery-3.7.1.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/feather.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.slimscroll.js') }}"></script>
+
+  <script src="{{ url_for('static', filename='js/select2.min.js') }}"></script>
+
+  <script src="{{ url_for('static', filename='plugins/datatables/jquery.dataTables.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='plugins/datatables/datatables.min.js') }}"></script>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1"></script>
+  
+
+  <script>
+    function setupSlider(sliderId, labelId) {
+        const range = document.getElementById(sliderId);
+        const label = document.getElementById(labelId);
+
+        const update = () => {
+            let val = range.value; // Get the raw value
+            const min = range.min ? range.min : 0;
+            const max = range.max ? range.max : 100;
+            
+            // --- ADD THIS LOGIC ---
+            if (sliderId === 'zoomRange') {
+                // Force 1 decimal place and add the 'x'
+                val = parseFloat(val).toFixed(1) + "x";
+            }
+            // -----------------------
+
+            // Calculate percentage for positioning
+            const percent = ((range.value - min) * 100) / (max - min);
+            
+            label.innerHTML = val; // Now val includes 'x' if it's the zoom slider
+            
+            // Position the label based on the percentage
+            label.style.left = `calc(${percent}% + (${8 - percent * 0.15}px))`;
+        };
+
+        range.addEventListener('input', update);
+        update(); 
+    }
+
+    // Keep your initializations as they are
+    setupSlider('nfft', 'rangeValue');
+    setupSlider('frequencyRange', 'freqLabel');
+    setupSlider('zoomRange', 'zoomLabel');
+
+
+
+    // script to handle operations
+    
+let loadedSignalId = null;
+let timeChart = null;
+let fftChart = null;
+
+let currentT = null;
+let currentX = null;
+
+let currentX_Clean = null;
+let currentX_Noisy = null;
+
+
+
+function getParams() {
+  return {
+    winStart: parseFloat(document.getElementById("winStart").value),
+    winLen:   parseFloat(document.getElementById("winLen").value),
+    nfft:     parseInt(document.getElementById("nfft").value, 10),
+    fmin:     0,
+    fmax:     parseFloat(document.getElementById("frequencyRange").value),
+    logY:     document.getElementById("logScale").checked
+  };
+}
+
+
+function showHR(hrBpm, peakHz) {
+  const box = document.getElementById("hrBox");
+  const hrValue = document.getElementById("hrValue");
+  const peakFreq = document.getElementById("peakFreq");
+
+  if (hrBpm && isFinite(hrBpm)) {
+    hrValue.textContent = `${hrBpm.toFixed(1)} BPM`;
+    peakFreq.textContent = `${peakHz.toFixed(2)}`;
+    box.style.display = "block";
+  } else {
+    box.style.display = "none";
+  }
+}
+
+function plotTimeSignal(t, xClean, xNoisy, winStart, winLen) {
+  const ctx = document.getElementById("timeChart").getContext("2d");
+  
+  // Format datasets
+  const cleanData = xClean ? t.map((ti, i) => ({ x: ti, y: xClean[i] })) : [];
+  const noisyData = xNoisy ? t.map((ti, i) => ({ x: ti, y: xNoisy[i] })) : [];
+
+  if (timeChart) timeChart.destroy();
+
+  // Get current checkbox states
+  const isCleanVisible = document.getElementById("showClean")?.checked !== false; // default true
+  const isNoisyVisible = document.getElementById("showNoisy")?.checked !== false; // default true
+
+  const xMin = Math.min(...t);
+  const xMax = Math.max(...t);
+  const start = Math.max(xMin, winStart);
+  const end = Math.min(xMax, winStart + winLen);
+
+  timeChart = new Chart(ctx, {
+    type: "line",
+    data: {
+      datasets: [
+        {
+          label: "Clean Signal",
+          data: cleanData,
+          pointRadius: 0,
+          borderWidth: 2,
+          borderColor: "rgba(54, 162, 235, 1)", // Blue
+          backgroundColor: "transparent",
+          hidden: !isCleanVisible
+        },
+        {
+          label: "Noisy Signal",
+          data: noisyData,
+          pointRadius: 0,
+          borderWidth: 1,
+          borderColor: "rgba(255, 99, 132, 0.7)", // Red/Pink
+          backgroundColor: "transparent",
+          hidden: !isNoisyVisible
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      parsing: false,
+      scales: {
+        x: { type: "linear", title: { display: true, text: "Time (s)" } },
+        y: { title: { display: true, text: "Amplitude" } }
+      },
+      plugins: {
+        legend: { display: true }, // Important for overlay
+        annotation: {
+          annotations: {
+            windowBox: {
+              type: "box",
+              xMin: start, xMax: end,
+              yMin: "min", yMax: "max",
+              backgroundColor: "rgba(54, 162, 235, 0.05)",
+              borderColor: "rgba(54, 162, 235, 0.3)",
+              borderWidth: 1
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
+// Update chart visibility based on toggles
+function updateChartVisibility() {
+    if (!timeChart) return;
+    
+    // Toggle clean signal (Dataset index 0)
+    timeChart.setDatasetVisibility(0, document.getElementById("showClean").checked);
+    // Toggle noisy signal (Dataset index 1)
+    timeChart.setDatasetVisibility(1, document.getElementById("showNoisy").checked);
+    
+    timeChart.update();
+}
+
+
+function plotFft(freq, power, fmin, fmax, logY) {
+  const ctx = document.getElementById("fftChart").getContext("2d");
+
+  // Filter range client-side for zoom
+  const data = [];
+  for (let i = 0; i < freq.length; i++) {
+    const f = freq[i];
+    if (f >= fmin && f <= fmax) data.push({ x: f, y: power[i] });
+  }
+
+  if (fftChart) fftChart.destroy();
+
+  fftChart = new Chart(ctx, {
+    type: "line",
+    data: {
+      datasets: [{
+        label: "Power Spectrum",
+        data,
+        pointRadius: 0,
+        borderWidth: 1,
+      }]
+    },
+    options: {
+      parsing: false,
+      scales: {
+        x: { type: "linear", title: { display: true, text: "Frequency (Hz)" } },
+        y: {
+          type: logY ? "logarithmic" : "linear",
+          title: { display: true, text: logY ? "Power (log)" : "Power" },
+          // avoid log scale crash on zeros
+          min: logY ? 1e-12 : undefined
+        }
+      }
+    }
+  });
+}
+
+function loadSignalOperation() {
+  console.log("✅ loadSignalOperation() called");
+
+  const input = document.getElementById("signalFileInput");
+  const fsInput = document.getElementById("fsInput");
+  const durationEl = document.getElementById("durationSelect");
+
+  if (!input) return alert("Missing #signalFileInput");
+  if (!fsInput) return alert("Missing #fsInput");
+  if (!durationEl) return alert("Missing #durationSelect");
+
+  console.log("Files:", input.files);
+
+  if (parseFloat(fsInput.value) < 50) {
+    alert("Sampling rate must be ≥ 50 Hz for FFT-based analysis.");
+    return;
+  }
+
+  if (!input.files.length) {
+    alert("Please upload a CSV signal file first.");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("file", input.files[0]);
+  formData.append("fs", fsInput.value);
+  formData.append("duration", durationEl.value);
+
+  console.log("Sending to /signal/load", {
+    fs: fsInput.value,
+    duration: durationEl.value,
+    filename: input.files[0].name
+  });
+
+  fetch("/signal/load", { method: "POST", body: formData })
+    .then(async (res) => {
+      console.log("Response status:", res.status);
+
+      // If backend returns HTML error page, this will show it
+      const text = await res.text();
+      console.log("Raw response text:", text);
+
+      if (!res.ok) throw new Error("Signal loading failed: " + text);
+
+      // parse JSON from the already-read text
+      return JSON.parse(text);
+    })
+    .then(data => {
+      console.log("✅ Parsed JSON:", data);
+
+      loadedSignalId = data.signal_id;
+      currentT = data.t;
+      currentX = data.x;
+
+      if (data.fs) fsInput.value = data.fs;
+
+      const duration = parseFloat(durationEl.value);
+      const winLenInput = document.getElementById("winLen");
+      const winStartInput = document.getElementById("winStart");
+
+      if (!winLenInput) return alert("Missing #winLen");
+      if (!winStartInput) return alert("Missing #winStart");
+
+      winLenInput.value = Math.min(parseFloat(winLenInput.value), duration);
+      winStartInput.value = 0;
+
+      const p = getParams();
+      //plotTimeSignal(data.t, data.x, p.winStart, p.winLen);
+
+      currentT = data.t;
+      currentX_Clean = data.x; // Use x_original or x
+      currentX_Noisy = null;    // No noise yet
+      plotTimeSignal(currentT, currentX_Clean, null, p.winStart, p.winLen);
+
+      if (document.getElementById("autoUpdateFft")?.checked) {
+        computeFftOperation();
+      }
+    })
+    .catch(err => {
+      console.error("❌ loadSignalOperation error:", err);
+      alert(err.message || "Signal loading failed.");
+    });
+}
+
+// before issue if any 
+
+function computeFftOperation() {
+  if (!loadedSignalId) {
+    alert("Load a signal first.");
+    return;
+  }
+
+  const p = getParams();
+  console.log("NFFT being sent:", document.getElementById("nfft").value);
+
+  fetch("/signal/fft", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      signal_id: loadedSignalId,
+      window_start: p.winStart,
+      window_length: p.winLen,
+      nfft: p.nfft,
+      peak_band_hz: [0.7, 3.5]   // heart-rate band ~ 42–210 BPM (adjust if needed)
+    })
+  })
+  .then(res => {
+    if (!res.ok) throw new Error("FFT failed");
+    return res.json();
+  })
+  .then(data => {
+    plotFft(data.freq, data.power, p.fmin, p.fmax, p.logY);
+    showHR(data.hr_bpm, data.peak_hz);
+
+    // Update time highlight too (in case user changed window)
+    if (data.time && data.time.t) {
+      // USE THE GLOBALS here so we don't lose the noisy line during FFT updates
+      plotTimeSignal(currentT, currentX_Clean, currentX_Noisy, p.winStart, p.winLen);
+    }
+  })
+  .catch(err => {
+    console.error(err);
+    alert("FFT computation failed.");
+  });
+}
+
+// Auto-update triggers
+
+["winStart", "winLen"].forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  const handler = () => {
+    refreshTimeWindowOnly(); // ✅ immediate highlight update
+
+    const auto = document.getElementById("autoUpdateFft")?.checked;
+    if (auto && loadedSignalId) computeFftOperation();
+  };
+
+  el.addEventListener("input", handler);
+  el.addEventListener("change", handler); // ✅ reliable for number inputs
+});
+
+// B) FFT/visual controls: recompute FFT (no need to replot time)
+["nfft", "frequencyRange"].forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  el.addEventListener("input", () => {
+    const auto = document.getElementById("autoUpdateFft")?.checked;
+    if (auto && loadedSignalId) computeFftOperation();
+  });
+});
+
+// C) Scale radios: use 'change'
+["linearScale", "logScale"].forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  el.addEventListener("change", () => {
+    const auto = document.getElementById("autoUpdateFft")?.checked;
+    if (auto && loadedSignalId) computeFftOperation();
+  });
+});
+
+
+
+
+//add noise
+function addNoiseOperation() {
+  if (!loadedSignalId) {
+    alert("Load a signal first.");
+    return;
+  }
+
+  const noiseLevelEl = document.getElementById("noiseLevel");
+  const noiseTypeEl = document.getElementById("noiseType");
+
+  if (!noiseLevelEl || !noiseTypeEl) {
+    alert("Noise controls not found in the page.");
+    return;
+  }
+
+  const noiseLevel = parseFloat(noiseLevelEl.value);
+  const noiseType = noiseTypeEl.value;
+
+  if (!isFinite(noiseLevel) || noiseLevel <= 0) {
+    alert("Enter a noise level greater than 0 (e.g., 0.05).");
+    return;
+  }
+
+  fetch("/signal/add-noise", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      signal_id: loadedSignalId,
+      noise_type: noiseType,
+      noise_level: noiseLevel
+      // optional: seed: 123
+    })
+  })
+    .then(async (res) => {
+      const txt = await res.text();
+      if (!res.ok) throw new Error(txt || "Add noise failed");
+      return JSON.parse(txt);
+    })
+    .then(data => {
+      // --- ADD THIS LINE HERE ---
+      document.getElementById("visualizationToggles").style.setProperty('display', 'flex', 'important');
+
+      // 1. Update the UI Status Box
+      const box = document.getElementById("noiseBox");
+      const status = document.getElementById("noiseStatus");
+      if (box && status) {
+        status.textContent = `${data.noise.type} (level=${data.noise.level})`;
+        box.style.display = "block";
+      }
+
+      // 2. Update the Global State
+      currentT = data.t;
+      // Use data.x_original if backend provides it, otherwise fallback to existing currentX_Clean
+      currentX_Clean = data.x_original || currentX_Clean; 
+      currentX_Noisy = data.x_noisy;
+
+      // 3. Re-plot the Overlay
+      const p = getParams();
+      plotTimeSignal(currentT, currentX_Clean, currentX_Noisy, p.winStart, p.winLen);
+
+      // 4. Update FFT
+      if (document.getElementById("autoUpdateFft")?.checked) {
+        computeFftOperation();
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      alert(err.message || "Add noise failed.");
+    });
+}
+
+//reset signal
+function resetSignalOperation() {
+  if (!loadedSignalId) {
+    alert("Load a signal first.");
+    return;
+  }
+
+  fetch("/signal/reset", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ signal_id: loadedSignalId })
+  })
+    .then(async (res) => {
+      const txt = await res.text();
+      if (!res.ok) throw new Error(txt || "Reset failed");
+      return JSON.parse(txt);
+    })
+    .then(data => {
+      document.getElementById("visualizationToggles").style.setProperty('display', 'none', 'important');
+      document.getElementById("filteredSignalCard").style.display = "none";
+
+      if (filterChart) filterChart.destroy();
+
+      const box = document.getElementById("noiseBox");
+      if (box) box.style.display = "none";
+
+      // 1. Update global variables
+      currentT = data.t;
+      currentX_Clean = data.x;     // The 'x' returned by reset is the clean version
+      currentX_Noisy = null;       // Resetting means there is NO noisy version anymore
+
+      // 2. Refresh the UI
+      const p = getParams();
+      plotTimeSignal(currentT, currentX_Clean, currentX_Noisy, p.winStart, p.winLen);
+
+      if (document.getElementById("autoUpdateFft")?.checked) {
+        computeFftOperation();
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      alert(err.message || "Reset failed.");
+    });
+}
+
+// refresh time window only
+function refreshTimeWindowOnly() {
+  if (!currentT || !currentX_Clean) return;
+  const p = getParams();
+  // Always pass both, even if currentX_Noisy is null
+  plotTimeSignal(currentT, currentX_Clean, currentX_Noisy, p.winStart, p.winLen);
+}
+
+// toggle filter inputs
+function toggleFilterInputs() {
+    const type = document.getElementById("filterType").value;
+    const container = document.getElementById("cutoff2Container");
+    const label1 = document.getElementById("cutoff1Label");
+    
+    if (type === "bandpass" || type === "bandstop") {
+        container.style.setProperty('display', 'flex', 'important');
+        label1.innerText = "Low Cut (Hz)";
+    } else {
+        container.style.setProperty('display', 'none', 'important');
+        label1.innerText = "Cutoff (Hz)";
+    }
+}
+
+
+// filter chart
+let filterChart = null;
+
+function plotFilteredSignal(t, xFiltered, winStart, winLen) {
+    const card = document.getElementById("filteredSignalCard");
+    
+    // 1. Show the card FIRST
+    card.style.display = "block";
+
+    if (filterChart) filterChart.destroy();
+
+    const ctx = document.getElementById("filterChart").getContext("2d");
+    const data = t.map((ti, i) => ({ x: ti, y: xFiltered[i] }));
+    
+
+    // Make the card visible
+    document.getElementById("filteredSignalCard").style.display = "block";
+
+    
+
+    const xMin = Math.min(...t);
+    const xMax = Math.max(...t);
+    const start = Math.max(xMin, winStart);
+    const end = Math.min(xMax, winStart + winLen);
+
+    const p = getParams();
+
+    filterChart = new Chart(ctx, {
+        type: "line",
+        data: {
+            datasets: [{
+                label: "Filtered Signal",
+                data: data,
+                borderColor: "rgb(2, 170, 44)", // Green
+                borderWidth: 1.5,
+                pointRadius: 0,
+                fill: "false"
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animattion: false,
+            scales: {
+                x: { type: "linear", title: { display: true, text: "Time (s)" } },
+                y: { title: { display: true, text: "Amplitude" } }
+            },
+            plugins: {
+                annotation: {
+                    annotations: {
+                        windowBox: {
+                            type: "box",
+                            xMin: start, xMax: end,
+                            yMin: "min", yMax: "max",
+                            backgroundColor: "rgba(2, 170, 44, 0.1)",
+                            borderColor: "rgba(2, 170, 44, 0.4)",
+                            borderWidth: 1
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+
+// filter operation
+let currentX_Filtered = null;
+
+function applyFilterOperation() {
+    if (!loadedSignalId) return alert("Load a signal first.");
+
+    const payload = {
+        signal_id: loadedSignalId,
+        filter_type: document.getElementById("filterType").value,
+        order: parseInt(document.getElementById("filterOrder").value),
+        cutoff1: parseFloat(document.getElementById("cutoff1").value),
+        cutoff2: parseFloat(document.getElementById("cutoff2").value)
+    };
+
+    fetch("/signal/filter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+    })
+    .then(res => res.json())
+    .then(data => {
+        // Update global state
+        currentX_Filtered = data.x_filtered;
+        
+        // Plot the NEW chart below the original
+        const p = getParams();
+        plotFilteredSignal(currentT, currentX_Filtered, p.winStart, p.winLen);
+        
+        // Update FFT to show the "Cleaned" spectrum
+        computeFftOperation();
+    });
+}
+
+
+//reset
+function resetAll() {
+    window.location.reload();
+}
+
+
+  </script>
+
+</body>
+
+</html>
